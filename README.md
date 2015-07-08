@@ -33,7 +33,7 @@ In the case a patch needs to be made to StipeMock, it will be identified by an i
 
 To capture requests to Strip simply add these lines to your spec files
 
-```
+```ruby
 before(:all) do
   StripeMock.start
 end
@@ -50,7 +50,7 @@ Gemfile. And, add `StripeMock.start` before any Stripe calls that you want to mo
 
 To get a mocked response, just use the Stripe gem as you normally would.
 
-```
+```ruby
 # Setup dummy transfers for Stipe::Transfer.all to pull back. Without first
 # creating transfers Stipe::Transfer.all will not return any transfers. The
 # same goes for each type of Stripe method
@@ -86,7 +86,7 @@ as it normally would. So if you would expect a Stripe::ListObject in a live envi
 By design, all mocked data is saved in memory within the current thread. That means that they will persist across specs
 and you may get some unexpected results. To clear them out after each spec, add this to your spec_helper.
 
-```
+```ruby
 RSpec.configure do |c|
   c.before(:each) do
     StripeMock::Session.clear
