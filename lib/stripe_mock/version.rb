@@ -1,3 +1,3 @@
 module StripeMock
-  VERSION = "2015.07.07.0"
+  VERSION = "0.1.0"
 end

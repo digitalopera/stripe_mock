@@ -5,7 +5,7 @@ class MockedStripe < Sinatra::Base
 
   #== TRANSFERS ================================================================
   get "/v1/transfers" do
-    json_response StripeMock::Data::Transfers.transfers
+    json_response StripeMock::Data::transfers
   end
 
   get "/v1/transfers/:id" do
@@ -13,7 +13,7 @@ class MockedStripe < Sinatra::Base
   end
 
   post '/v1/transfers' do
-    hash = StripeMock::Data::Transfers.transfer(converted_params)
+    hash = StripeMock::Data::transfer(converted_params)
     add_to_collection hash, 'transfers'
     json_response hash
   end
