@@ -9,12 +9,18 @@ class MockedStripe < Sinatra::Base
   end
 
   get "/v1/transfers/:id" do
-    json_response StripeMock::Data::transfer
+    transfer_overrides = {
+      id: params[:id]
+    }
+
+    if StripeMock.transfer_failures.include?( params[:id] )
+      transfer_overrides[:failure_code] = params[:id]
+    end
+    json_response StripeMock::Data::transfer transfer_overrides
   end
 
   post '/v1/transfers' do
-    hash = StripeMock::Data::transfer
-    json_response hash
+    json_response StripeMock::Data::transfer
   end
 
   private #---------------------------------------------------------------------

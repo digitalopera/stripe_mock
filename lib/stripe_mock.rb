@@ -6,6 +6,7 @@ require "stripe_mock/data/charges"
 require "stripe_mock/data/transfers"
 
 require "stripe_mock/stripe_proxy"
+require "stripe_mock/failures"
 require "stripe_mock/utils"
 require "stripe_mock/webmock"
 
