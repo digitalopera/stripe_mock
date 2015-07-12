@@ -18,13 +18,6 @@ describe 'StripeMock Transfers' do
       it 'should have 2 transfers' do
         expect(transfers.data.size).to eq 2
       end
-
-      context 'when limit is less than total transfers' do
-        let(:transfers){ Stripe::Transfer.all(limit: 3) }
-        it 'should limit the number of transfers returned' do
-          skip 'TODO'
-        end
-      end
     end
   end
 
