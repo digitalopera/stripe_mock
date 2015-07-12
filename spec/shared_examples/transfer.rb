@@ -4,10 +4,6 @@ RSpec.shared_examples "a transfer" do
   end
 
   describe 'json structure' do
-    it 'should have the id supplied' do
-      expect(transfer.id).to eq id
-    end
-
     it 'should be transfer' do
       expect(transfer.object).to eq 'transfer'
     end

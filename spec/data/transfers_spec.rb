@@ -17,7 +17,6 @@ describe 'StripeMock Transfers' do
       end
 
       it_should_behave_like 'a transfer' do
-        let(:id){ transfer.id }
         let(:transfer){ transfers.data.first }
       end
 
@@ -49,34 +48,13 @@ describe 'StripeMock Transfers' do
 
   describe 'get transfer/:id' do
     it_should_behave_like 'a transfer' do
-      let(:id){ Stripe::Transfer.create.id }
-      let(:transfer){ Stripe::Transfer.retrieve(id) }
-    end
-
-    it 'should return the specified transfer by id' do
-      transfer = Stripe::Transfer.create
-      expect(Stripe::Transfer.retrieve(transfer.id).to_json).to eq transfer.to_json
+      let(:transfer){ Stripe::Transfer.retrieve(StripeMock.new_id('_tr')) }
     end
   end
 
   describe 'post transfers' do
     it_should_behave_like 'a transfer' do
-      let(:id){ transfer.id }
       let(:transfer){ Stripe::Transfer.create }
-    end
-
-    context 'when amount is supplied' do
-      let(:transfer){ Stripe::Transfer.create(amount: 1000) }
-      it 'should return a transfer with the amount' do
-        expect(transfer.amount).to eq 1000
-      end
-    end
-
-    context 'when currency is supplied' do
-      let(:transfer){ Stripe::Transfer.create(amount: 200, currency: 'AUD') }
-      it 'should return a transfer with the currency' do
-        expect(transfer.currency).to eq 'AUD'
-      end
     end
   end
 end

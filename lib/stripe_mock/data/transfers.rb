@@ -42,7 +42,7 @@ module StripeMock
         object: 'list',
         url: '/v1/transfers',
         has_more: false,
-        data: StripeMock::Session.transfers
+        data: [transfer, transfer]
       }
     end
   end

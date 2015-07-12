@@ -9,27 +9,18 @@ class MockedStripe < Sinatra::Base
   end
 
   get "/v1/transfers/:id" do
-    json_response StripeMock::Session.find('transfers', params[:id])
+    json_response StripeMock::Data::transfer
   end
 
   post '/v1/transfers' do
-    hash = StripeMock::Data::transfer(converted_params)
-    add_to_collection hash, 'transfers'
+    hash = StripeMock::Data::transfer
     json_response hash
   end
 
   private #---------------------------------------------------------------------
 
-  def converted_params
-    StripeMock.convert_hash_values_to_i params
-  end
-
   def json_response(hash)
     content_type :json
     hash.to_json
-  end
-
-  def add_to_collection(hash, collection)
-    StripeMock::Session.send(collection) << hash
   end
 end

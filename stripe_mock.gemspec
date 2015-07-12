@@ -29,4 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard-rspec", "~> 4.6.0"
   spec.add_development_dependency "faker",       "~> 1.4.3"
   spec.add_development_dependency "stripe",      "~> 1.23.0"
+  spec.add_development_dependency "dotenv-rails", "~> 2.0.2"
 end
