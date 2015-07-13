@@ -3,6 +3,31 @@ require 'json'
 
 class MockedStripe < Sinatra::Base
 
+  #== CHARGES ==================================================================
+  get "/v1/charges" do
+    json_response StripeMock::Data::charges
+  end
+
+  get "/v1/charges/:id" do
+    json_response StripeMock::Data::charge id: params[:id]
+  end
+
+  post '/v1/charges' do
+    if params[:source] == 'tok_invalid_number'
+      status 402
+      card_error = StripeMock.card_failures[:incorrect_number]
+
+      json_response({
+        error: {
+          message: card_error[:message],
+          param: card_error[:param]
+        }
+      })
+    else
+      json_response StripeMock::Data::charge
+    end
+  end
+
   #== TRANSFERS ================================================================
   get "/v1/transfers" do
     json_response StripeMock::Data::transfers

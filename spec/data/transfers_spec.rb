@@ -2,6 +2,10 @@ require 'spec_helper'
 require 'shared_examples/transfer'
 
 describe 'StripeMock Transfers' do
+  before(:each) do
+    StripeMock.capture_requests
+  end
+  
   describe 'get transfers' do
     let(:transfers){ Stripe::Transfer.all }
 

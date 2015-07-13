@@ -1,6 +1,6 @@
 module StripeMock
   module Data
-    def charge(params={})
+    def self.charge(params={})
       id = params[:id] || StripeMock.new_id('ch')
 
       {
@@ -37,6 +37,15 @@ module StripeMock
           url: "/v1/charges/#{ id }/refunds",
           data: []
         }
+      }.merge(params)
+    end
+
+    def self.charges(params={})
+      {
+        object: 'list',
+        url: '/v1/charges',
+        has_more: false,
+        data: [charge, charge]
       }.merge(params)
     end
   end

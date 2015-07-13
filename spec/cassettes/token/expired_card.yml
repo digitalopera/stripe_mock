@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/tokens
+    body:
+      encoding: US-ASCII
+      string: card[name]=Cecil%20Gutkowski&card[number]=4242424242424242&card[exp_month]=6&card[exp_year]=2014&card[cvc]=201&card[address_line1]=459%20Antonio%20Port&card[address_city]=Lempiberg&card[address_state]=AL&card[address_zip]=74155-4901
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.23.0
+      Authorization:
+      - Bearer sk_test_DG9jhMEC44K3GkcAvgq6X37L
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.23.0","lang":"ruby","lang_version":"2.2.2 p95 (2015-04-13)","platform":"x86_64-darwin14","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Grants-MBP 14.4.0 Darwin Kernel Version 14.4.0: Thu May 28 11:35:04 PDT 2015;
+        root:xnu-2782.30.5~1/RELEASE_X86_64 x86_64","hostname":"Grants-MBP"}'
+      Content-Length:
+      - '232'
+  response:
+    status:
+      code: 402
+      message: Payment Required
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Mon, 13 Jul 2015 20:47:51 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '164'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_6bQht1Z44NPpdv
+      Stripe-Version:
+      - '2014-11-05'
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "error": {
+            "message": "Your card's expiration year is invalid.",
+            "type": "card_error",
+            "param": "exp_year",
+            "code": "invalid_expiry_year"
+          }
+        }
+    http_version: 
+  recorded_at: Mon, 13 Jul 2015 20:47:51 GMT
+recorded_with: VCR 2.9.3
