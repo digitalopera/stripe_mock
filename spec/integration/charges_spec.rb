@@ -219,11 +219,111 @@ describe 'Stripe::Charge', :vcr do
     end
 
     context 'when customer is missing' do
-      skip
+      before(:each) do
+        customer = nil
+        VCR.use_cassette("customer/successful") do
+          customer = Stripe::Customer.create(description: 'Test customer for StripeMock')
+        end
+        charge_attrs[:customer] = customer.id
+        charge_attrs[:card] = nil
+      end
+
+      it 'should have missing' do
+        VCR.use_cassette("charges/customer_missing") do
+          expect{ charge }.to raise_error{ Stripe::CardError }
+        end
+      end
+
+      it 'should have a http_status of 402' do
+        VCR.use_cassette("charges/customer_missing") do
+          begin
+            charge
+          rescue Stripe::CardError => e
+            expect(e.http_status).to eq 402
+          end
+        end
+      end
+
+      it 'should have StripeMock keys' do
+        VCR.use_cassette("charges/customer_missing") do
+          begin
+            charge
+          rescue Stripe::CardError => e
+            expect(e.json_body[:error].keys.sort).to eq StripeMock.charge_failures[:missing].keys.sort
+          end
+        end
+      end
+
+      it 'should have StripeMock values' do
+        VCR.use_cassette("charges/customer_missing") do
+          begin
+            charge
+          rescue Stripe::CardError => e
+            expect( e.json_body[:error].values.sort ).to eq StripeMock.charge_failures[:missing].values.sort
+          end
+        end
+      end
     end
 
-    context 'when there is a processing error' do
-      skip
+    context 'when there is a processing error', focus: true do
+      before(:each) do
+        card_attrs[:card].merge!(number: '4000000000000119')
+      end
+
+      it 'should have missing' do
+        VCR.use_cassette("charges/processing_error") do
+          expect{ charge }.to raise_error{ Stripe::CardError }
+        end
+      end
+
+      it 'should have a http_status of 402' do
+        VCR.use_cassette("charges/processing_error") do
+          begin
+            charge
+          rescue Stripe::CardError => e
+            expect(e.http_status).to eq 402
+          end
+        end
+      end
+
+      it 'should have StripeMock keys' do
+        VCR.use_cassette("charges/processing_error") do
+          begin
+            charge
+          rescue Stripe::CardError => e
+            expect(e.json_body[:error].keys.sort).to eq StripeMock.charge_failures[:processing_error].keys.sort
+          end
+        end
+      end
+
+      it 'should have StripeMock values' do
+        VCR.use_cassette("charges/processing_error") do
+          begin
+            charge
+          rescue Stripe::CardError => e
+            # Since :charge is dynamic, remove that value from this test.
+            # Charge is testing in following test
+            error_hash = e.json_body[:error]
+            error_hash.delete :charge
+            without_charge = StripeMock.charge_failures[:processing_error]
+            without_charge.delete(:charge)
+
+            expect(error_hash.values.sort).to eq without_charge.values.sort
+          end
+        end
+      end
+
+      it 'should have StripeMock charge value' do
+        VCR.use_cassette("charges/processing_error") do
+          begin
+            charge
+          rescue Stripe::CardError => e
+            stripe_charge_id = e.json_body[:error][:charge]
+
+            expect(stripe_charge_id).to match /\Ach_/
+          end
+        end
+      end
     end
   end
 end

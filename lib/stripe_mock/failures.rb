@@ -81,6 +81,18 @@ module StripeMock
           code: 'card_declined',
           type: 'card_error',
           charge: 'ch_xxx'
+        },
+        missing: {
+          message: "Cannot charge a customer that has no active card",
+          code: 'missing',
+          param: 'card',
+          type: 'card_error'
+        },
+        processing_error: {
+          message: "An error occurred while processing your card. Try again in a little bit.",
+          code: 'processing_error',
+          type: 'card_error',
+          charge: 'ch_xxx'
         }
       }
     end
