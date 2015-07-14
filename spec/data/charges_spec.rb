@@ -42,36 +42,36 @@ describe 'StripeMock Charges' do
     end
 
     describe 'card errors' do
-      context 'when tok_invalid_number is used' do
-        let(:incorrect_number){ Stripe::Charge.create(source: 'tok_invalid_number') }
-        it 'should raise a stripe error' do
-          expect{ incorrect_number }.to raise_error(Stripe::CardError)
-        end
-
-        it 'should raise a stripe number error' do
-          begin
-            incorrect_number
-          rescue Stripe::CardError => e
-            expect(e.message).to eq StripeMock.card_failures[:incorrect_number][:message]
-          end
-        end
-
-        it 'should have a http_status of 402' do
-          begin
-            incorrect_number
-          rescue Stripe::CardError => e
-            expect(e.http_status).to eq 402
-          end
-        end
-
-        it 'should have a param of number' do
-          begin
-            incorrect_number
-          rescue Stripe::CardError => e
-            expect(e.json_body[:error][:param]).to eq 'number'
-          end
-        end
-      end
+      # describe 'invalid_number' do
+      #   let(:invalid_number){ Stripe::Charge.create(source: 'tok_invalid_number') }
+      #   it 'should raise a stripe error' do
+      #     expect{ invalid_number }.to raise_error(Stripe::CardError)
+      #   end
+      #
+      #   it 'should raise a stripe number error' do
+      #     begin
+      #       invalid_number
+      #     rescue Stripe::CardError => e
+      #       expect(e.message).to eq StripeMock.card_failures[:invalid_number][:message]
+      #     end
+      #   end
+      #
+      #   it 'should have a http_status of 402' do
+      #     begin
+      #       invalid_number
+      #     rescue Stripe::CardError => e
+      #       expect(e.http_status).to eq 402
+      #     end
+      #   end
+      #
+      #   it 'should have a param of number' do
+      #     begin
+      #       invalid_number
+      #     rescue Stripe::CardError => e
+      #       expect(e.json_body[:error][:param]).to eq StripeMock.card_failures[:invalid_number][:param]
+      #     end
+      #   end
+      # end
     end
   end
 end

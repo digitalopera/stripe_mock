@@ -20,45 +20,27 @@ Or install it yourself as:
 
     $ gem install stripe_mock
 
-## Usage
+## How does StripeMock work?
 
-StripeMock uses Webmock to hijack the request to the Stripe server and return the corresponding Stripe response.
-
-## Versioning
-
-Versions correspond Stripe's API versioning. So if Stripe's version is 2015-07-07, StripeMock's version will be 2015.07.07.0.
-In the case a patch needs to be made to StipeMock, it will be identified by an incremented right hand number. Example: 2015.07.07.*1*
+StripeMock uses Webmock to hijack the request to the Stripe servers and return the
+corresponding Stripe response.
 
 ### Setup
 
-To capture requests to Strip simply add these lines to your spec files
+To capture requests to Strip simply add these lines to your spec file
 
 ```ruby
 before(:all) do
-  StripeMock.start
-end
-
-after(:all) do
-  StripeMock.stop
+  StripeMock.capture_requests
 end
 ```
-
-Or, if you want to mock Stripe in while in development, make sure that `gem 'stripe_mock'` is within the development block in your
-Gemfile. And, add `StripeMock.start` before any Stripe calls that you want to mock.
 
 ### Mocked Requests
 
 To get a mocked response, just use the Stripe gem as you normally would.
 
 ```ruby
-# Setup dummy transfers for Stipe::Transfer.all to pull back. Without first
-# creating transfers Stipe::Transfer.all will not return any transfers. The
-# same goes for each type of Stripe method
-5.times do
-  Stipe::Transfer.create
-end
-
-Stipe::Transfer.all(limit: 3)
+Stipe::Transfer.all
 
 # #<Stripe::ListObject:0x3fe634d74498> JSON: {
 #   "object": "list",
@@ -78,26 +60,15 @@ Stipe::Transfer.all(limit: 3)
 # }
 ```
 
-Because all StripeMock is doing is intercepting the server call, the Stripe gem will continue to format the response
-as it normally would. So if you would expect a Stripe::ListObject in a live environment, StripeMock will do the same.
+## Stripe Errors
 
-#### Clearing Mocked Responses
+#### Charges
 
-By design, all mocked data is saved in memory within the current thread. That means that they will persist across specs
-and you may get some unexpected results. To clear them out after each spec, add this to your spec_helper.
-
-```ruby
-RSpec.configure do |c|
-  c.before(:each) do
-    StripeMock::Session.clear
-  end
-end
-```
+`invalid_number` - `Stripe::Charge.create(source: 'tok_invalid_number')`
 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/digitalopera/stripe_mock.
-
 
 ## License
 

@@ -219,13 +219,11 @@ describe 'Stripe::Charge', :vcr do
     end
 
     context 'when customer is missing' do
-      before(:each) do
-        customer = nil
-        VCR.use_cassette("customer/successful") do
-          customer = Stripe::Customer.create(description: 'Test customer for StripeMock')
-        end
+      let(:charge) do
+        customer = Stripe::Customer.create(description: 'Test customer for StripeMock')
         charge_attrs[:customer] = customer.id
         charge_attrs[:card] = nil
+        Stripe::Charge.create(charge_attrs)
       end
 
       it 'should have missing' do
@@ -265,7 +263,7 @@ describe 'Stripe::Charge', :vcr do
       end
     end
 
-    context 'when there is a processing error', focus: true do
+    context 'when there is a processing error' do
       before(:each) do
         card_attrs[:card].merge!(number: '4000000000000119')
       end

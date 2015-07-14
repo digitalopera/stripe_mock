@@ -3,6 +3,29 @@ require 'json'
 
 class MockedStripe < Sinatra::Base
 
+  #== TOKENS ===================================================================
+  get "/v1/tokens" do
+    # json_response StripeMock::Data::charges
+  end
+
+  get "/v1/tokens/:id" do
+    json_response StripeMock::Data::token id: params[:id]
+  end
+
+  post '/v1/tokens' do
+    matches = /tok_(\S+)/.match params[:source]
+    if !matches.nil? && !matches[1].nil?
+      status 402
+      card_error = StripeMock.card_failures[matches[1].to_sym]
+
+      json_response({
+        error: card_error
+      })
+    else
+      json_response StripeMock::Data::token
+    end
+  end
+
   #== CHARGES ==================================================================
   get "/v1/charges" do
     json_response StripeMock::Data::charges
@@ -13,9 +36,10 @@ class MockedStripe < Sinatra::Base
   end
 
   post '/v1/charges' do
-    if params[:source] == 'tok_invalid_number'
+    matches = /tok_(\S+)/.match params[:source]
+    if !matches.nil? && !matches[1].nil?
       status 402
-      card_error = StripeMock.card_failures[:incorrect_number]
+      card_error = StripeMock.charge_failures[matches[1].to_sym]
 
       json_response({
         error: {

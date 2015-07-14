@@ -4,6 +4,7 @@ require "stripe_mock/data/bank_account"
 require "stripe_mock/data/cards"
 require "stripe_mock/data/charges"
 require "stripe_mock/data/transfers"
+require "stripe_mock/data/tokens"
 
 require "stripe_mock/stripe_proxy"
 require "stripe_mock/failures"

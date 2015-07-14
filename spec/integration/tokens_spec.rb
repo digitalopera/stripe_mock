@@ -20,6 +20,12 @@ describe 'Stripe::Token', :vcr do
   let(:token) { Stripe::Token.create(card_attrs) }
 
   describe 'valid token' do
+    it 'should return a stripe object' do
+      VCR.use_cassette("token/successful") do
+        expect(token).to be_is_a(Stripe::StripeObject)
+      end
+    end
+
     it 'should return the token' do
       VCR.use_cassette("token/successful") do
         expect(token.object).to eq 'token'

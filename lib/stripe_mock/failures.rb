@@ -53,10 +53,7 @@ module StripeMock
           code: 'incorrect_zip',
           param: 'zip',
           type: 'card_error'
-        },
-        # card_declined: ["The card was declined", nil, 'card_declined', 402],
-        missing: ["There is no card on a customer that is being charged.", nil, 'missing', 402],
-        processing_error: ["An error occurred while processing the card", nil, 'processing_error', 402],
+        }
       }
     end
 
