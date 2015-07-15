@@ -51,6 +51,11 @@ class MockedStripe < Sinatra::Base
   #   end
   # end
 
+  #== BALANCE TRANSACTIONS =====================================================
+  get "/v1/balance/history" do
+    json_response StripeMock::Data::balance_transactions
+  end
+
   #== TRANSFERS ================================================================
   get "/v1/transfers" do
     json_response StripeMock::Data::transfers

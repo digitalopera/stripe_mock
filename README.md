@@ -2,7 +2,7 @@
 
 # This gem is Incomplete!
 
-Only Transfers is complete
+Only Transfers is fully stubbed out.
 
 ## Installation
 
