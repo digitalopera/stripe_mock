@@ -4,12 +4,14 @@
 
 Only Transfers is fully stubbed out.
 
+### Setup for Stripe API version 2015-07-07
+
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'stripe_mock'
+gem 'stripe_mock', require: false
 ```
 
 And then execute:
