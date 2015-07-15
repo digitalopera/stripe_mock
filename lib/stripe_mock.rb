@@ -4,8 +4,8 @@ require "stripe_mock/credit_cards/cards"
 
 require "stripe_mock/data/bank_account"
 require "stripe_mock/data/balance_transaction"
-# require "stripe_mock/data/cards"
-# require "stripe_mock/data/charges"
+require "stripe_mock/data/cards"
+require "stripe_mock/data/charges"
 require "stripe_mock/data/transfers"
 # require "stripe_mock/data/tokens"
 

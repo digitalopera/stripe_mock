@@ -26,10 +26,6 @@ describe 'Stripe::Charge', :vcr do
   let(:token) { Stripe::Token.create(card_attrs) }
   let(:charge){ Stripe::Charge.create(charge_attrs) }
 
-  before(:each) do
-    skip 'NOT COMPLETE'
-  end
-
   describe 'valid charge' do
     it 'should return the charge' do
       VCR.use_cassette("charges/successful") do

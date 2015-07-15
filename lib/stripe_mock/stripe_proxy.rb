@@ -29,11 +29,11 @@ class MockedStripe < Sinatra::Base
   # get "/v1/charges" do
   #   json_response StripeMock::Data::charges
   # end
-  #
-  # get "/v1/charges/:id" do
-  #   json_response StripeMock::Data::charge id: params[:id]
-  # end
-  #
+
+  get "/v1/charges/:id" do
+    json_response StripeMock::Data::charge id: params[:id]
+  end
+
   # post '/v1/charges' do
   #   matches = /tok_(\S+)/.match params[:source]
   #   if !matches.nil? && !matches[1].nil?
