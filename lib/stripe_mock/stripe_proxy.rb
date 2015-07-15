@@ -4,53 +4,52 @@ require 'json'
 class MockedStripe < Sinatra::Base
 
   #== TOKENS ===================================================================
-  get "/v1/tokens" do
-    # json_response StripeMock::Data::charges
-  end
-
-  get "/v1/tokens/:id" do
-    json_response StripeMock::Data::token id: params[:id]
-  end
-
-  post '/v1/tokens' do
-    matches = /tok_(\S+)/.match params[:source]
-    if !matches.nil? && !matches[1].nil?
-      status 402
-      card_error = StripeMock.card_failures[matches[1].to_sym]
-
-      json_response({
-        error: card_error
-      })
-    else
-      json_response StripeMock::Data::token
-    end
-  end
-
-  #== CHARGES ==================================================================
-  get "/v1/charges" do
-    json_response StripeMock::Data::charges
-  end
-
-  get "/v1/charges/:id" do
-    json_response StripeMock::Data::charge id: params[:id]
-  end
-
-  post '/v1/charges' do
-    matches = /tok_(\S+)/.match params[:source]
-    if !matches.nil? && !matches[1].nil?
-      status 402
-      card_error = StripeMock.charge_failures[matches[1].to_sym]
-
-      json_response({
-        error: {
-          message: card_error[:message],
-          param: card_error[:param]
-        }
-      })
-    else
-      json_response StripeMock::Data::charge
-    end
-  end
+  # get "/v1/tokens" do
+  #   # json_response StripeMock::Data::charges
+  # end
+  #
+  # get "/v1/tokens/:id" do
+  #   json_response StripeMock::Data::token id: params[:id]
+  # end
+  #
+  # post '/v1/tokens' do
+  #   if StripeMock::CreditCards.is_erroneous?(params[:card])
+  #     status 402
+  #     card_error = StripeMock::CreditCards.card_error(params[:card])
+  #
+  #     json_response({
+  #       error: card_error
+  #     })
+  #   else
+  #     json_response StripeMock::Data::token
+  #   end
+  # end
+  #
+  # #== CHARGES ==================================================================
+  # get "/v1/charges" do
+  #   json_response StripeMock::Data::charges
+  # end
+  #
+  # get "/v1/charges/:id" do
+  #   json_response StripeMock::Data::charge id: params[:id]
+  # end
+  #
+  # post '/v1/charges' do
+  #   matches = /tok_(\S+)/.match params[:source]
+  #   if !matches.nil? && !matches[1].nil?
+  #     status 402
+  #     card_error = StripeMock.charge_failures[matches[1].to_sym]
+  #
+  #     json_response({
+  #       error: {
+  #         message: card_error[:message],
+  #         param: card_error[:param]
+  #       }
+  #     })
+  #   else
+  #     json_response StripeMock::Data::charge
+  #   end
+  # end
 
   #== TRANSFERS ================================================================
   get "/v1/transfers" do

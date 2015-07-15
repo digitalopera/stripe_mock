@@ -48,17 +48,6 @@ module StripeMock
           param: 'exp_year',
           type: 'card_error'
         },
-        incorrect_zip: {
-          message: "The card's postal code is incorrect",
-          code: 'incorrect_zip',
-          param: 'zip',
-          type: 'card_error'
-        }
-      }
-    end
-
-    def charge_failures
-      {
         incorrect_cvc: {
           message: "Your card's security code is incorrect.",
           code: 'incorrect_cvc',

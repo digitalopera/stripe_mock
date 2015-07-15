@@ -23,8 +23,7 @@ module StripeMock
         address_zip_check: 'pass',
         tokenization_method: nil,
         dynamic_last4: nil,
-        metadata: {},
-        customer: nil
+        metadata: {}
       }.merge(params)
     end
   end

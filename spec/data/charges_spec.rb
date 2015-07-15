@@ -3,6 +3,7 @@ require 'shared_examples/charge'
 
 describe 'StripeMock Charges' do
   before(:each) do
+    skip
     StripeMock.capture_requests
   end
 

@@ -19,6 +19,10 @@ describe 'Stripe::Token', :vcr do
 
   let(:token) { Stripe::Token.create(card_attrs) }
 
+  before(:each) do
+    skip 'NOT COMPLETE'
+  end
+
   describe 'valid token' do
     it 'should return a stripe object' do
       VCR.use_cassette("token/successful") do
@@ -91,7 +95,7 @@ describe 'Stripe::Token', :vcr do
         card_attrs[:card].merge!(exp_month: 0)
       end
 
-      it 'should have incorrect_number' do
+      it 'should have invalid_expiry_month' do
         VCR.use_cassette("token/invalid_expiry_month") do
           expect{ token }.to raise_error{ Stripe::CardError }
         end
@@ -133,7 +137,7 @@ describe 'Stripe::Token', :vcr do
         card_attrs[:card].merge!(exp_year: 0)
       end
 
-      it 'should have incorrect_number' do
+      it 'should have invalid_expiry_year' do
         VCR.use_cassette("token/invalid_expiry_year") do
           expect{ token }.to raise_error{ Stripe::CardError }
         end
@@ -175,7 +179,7 @@ describe 'Stripe::Token', :vcr do
         card_attrs[:card].merge!(cvc: 0)
       end
 
-      it 'should have incorrect_number' do
+      it 'should have invalid_cvc' do
         VCR.use_cassette("token/invalid_cvc") do
           expect{ token }.to raise_error{ Stripe::CardError }
         end

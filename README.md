@@ -2,9 +2,9 @@
 
 # This gem is Incomplete!
 
-## Installation
+Only Transfers is complete
 
-This gem has not been released publically yet. So these installation methods will not work yet.
+## Installation
 
 Add this line to your application's Gemfile:
 
@@ -60,11 +60,15 @@ Stipe::Transfer.all
 # }
 ```
 
-## Stripe Errors
+##### Getting Transfer Failure Codes
 
-#### Charges
+To get the transfer failure_code filled in, just use the desired failure_code as the id of the transfer. EX:
 
-`invalid_number` - `Stripe::Charge.create(source: 'tok_invalid_number')`
+```ruby
+Stripe::Transfer.retrieve('insufficient_funds')
+```
+
+All codes are listed here: [https://stripe.com/docs/api/ruby#transfer_failures](https://stripe.com/docs/api/ruby#transfer_failures)
 
 ## Contributing
 

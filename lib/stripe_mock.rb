@@ -1,5 +1,7 @@
 require "stripe_mock/version"
 
+require "stripe_mock/credit_cards/cards"
+
 require "stripe_mock/data/bank_account"
 require "stripe_mock/data/cards"
 require "stripe_mock/data/charges"
